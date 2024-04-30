@@ -9,14 +9,15 @@ import App from './App';
 import store from './store'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
     <React.StrictMode>
         <AnimatePresence>
-            <Router>
-                <Provider store={ store }>
+            <Provider store={ store }>
+                <Router>
                     <App />
-                </Provider>
-            </Router>
+                </Router>
+            </Provider>
         </AnimatePresence>
     </React.StrictMode>
 );
