@@ -1,7 +1,4 @@
 import mysql from 'mysql2/promise'
-import dotenv from 'dotenv'
-
-dotenv.config();
 
 const getConnection = async () => {
     try {
@@ -13,6 +10,7 @@ const getConnection = async () => {
             waitForConnections: true,
             connectionLimit: 10,
             queueLimit: 0
+
         });
         return connection;
     } catch (error) {

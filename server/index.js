@@ -2,18 +2,22 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 
-dotenv.config();
+import userRoute from './routes/userRoute.js'
+// import protectedRoute from './routes/protectedRoute.js'
 
+dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(express.json());
 app.use(cors());
 
-//use routes here
+app.use('/user', userRoute);
+// app.use('/protected', protectedRoute);
+
 
 app.get('/', (req, res) => {
-    res.status(200).send('<h1>This is server</h1>');
+    res.status(200).send('This is server');
 });
 
 app.listen(port, () => {
