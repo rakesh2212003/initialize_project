@@ -29,8 +29,9 @@ export const signup = async (req, res) => {
             message: 'Signup Successful',
             token: token,
             data: {
-                name: firstname + ' ' + lastname,
-                email: email
+                firstname: firstname,
+                lastname: lastname,
+                email: email,
             },
         });
     }
@@ -64,8 +65,9 @@ export const login = async (req, res) => {
             message: 'Login successful',
             token: token,
             data: {
-                name: user.firstname + ' ' + user.lastname,
-                email: user.email
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
             }
         });
     } catch (error) {
