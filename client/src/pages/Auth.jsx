@@ -2,15 +2,14 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
+import { Input } from '../components'
 import { signup, login } from '../context/actions/authAction'
 
 const Auth = () => {
 
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isSignup, setIsSignup] = useState(true);
+    const [isSignup, setIsSignup] = useState(true)
+    const [formData, setFormData] = useState({})
+    const [error, setError] = useState({})
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -18,14 +17,19 @@ const Auth = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(isSignup){
-            dispatch(signup({firstname,lastname,email,password}, navigate));
-        }
-        else{
-            dispatch(login({email,password}, navigate));
+        const isValid = Object.values(error).every(value => value === '') && Object.keys(error).length !== 0;
+
+        if(isValid){
+            if(isSignup){
+                dispatch(signup({formData}, navigate));
+            }
+            else{
+                dispatch(login({formData}, navigate));
+            }
         }
     }
 
+    // console.log(error)
 
     return (
         <div className='w-screen h-screen flex flex-col items-center justify-center'>
@@ -33,17 +37,45 @@ const Auth = () => {
                 onSubmit={ handleSubmit }
                 className='w-[400px] h-auto flex flex-col justify-center items-center'
             >
-                <label htmlFor="firstname">Firstname</label>
-                <input type="text" name="firstname" id="firstname" onChange={(e) => setFirstname(e.target.value)} />
+                <Input 
+                    type={'text'}
+                    id={'firstname'}
+                    name={'Firstname'}
+                    formState={formData}
+                    formStateFunction={setFormData}
+                    errorState={error}
+                    errorStateFunction={setError}
+                />
 
-                <label htmlFor="lastname">Lastname</label>
-                <input type="text" name="lastname" id="lastname" onChange={(e) => setLastname(e.target.value)}/>
+                <Input 
+                    type={'text'}
+                    id={'lastname'}
+                    name={'Lastname'}
+                    formState={formData}
+                    formStateFunction={setFormData}
+                    errorState={error}
+                    errorStateFunction={setError}
+                />
 
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}/>
+                <Input 
+                    type={'email'}
+                    id={'email'}
+                    name={'Email'}
+                    formState={formData}
+                    formStateFunction={setFormData}
+                    errorState={error}
+                    errorStateFunction={setError}
+                />
 
-                <label htmlFor="password">password</label>
-                <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}/>
+                <Input 
+                    type={'password'}
+                    id={'password'}
+                    name={'Password'}
+                    formState={formData}
+                    formStateFunction={setFormData}
+                    errorState={error}
+                    errorStateFunction={setError}
+                />
 
                 <button type='submit'>Submit</button>
             </form>
