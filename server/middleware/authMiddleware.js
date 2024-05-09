@@ -7,8 +7,7 @@ const verifyToken = (req, res, next) => {
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.id = decoded?.id;
-        res.status(403).json({ error: decoded });
+        req.id = decoded.id;
 
         next();
     } catch (error) {
