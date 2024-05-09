@@ -48,7 +48,7 @@ export const login = async (req, res) => {
         const [rows] = await connection.execute(findEmail, [email]);
         connection.end();
 
-        if (!rows.length) {
+        if (rows.length === 0) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
