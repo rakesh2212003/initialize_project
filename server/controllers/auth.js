@@ -8,27 +8,27 @@ import { userTable, createUser, findEmail } from '../models/user.js'
 export const signup = async (req, res) => {
     try {
         const id = uuidv4();
-        const { firstname, lastname, email, password } = req.body;
+        const { username,firstname,lastname,email,password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
-        const data = [id, firstname, lastname, email, hashedPassword];
+        const data = [id,username,firstname,lastname,email,hashedPassword];
 
         const connection = await getConnection();
         connection.execute(userTable);
-        
         const [rows] = await connection.execute(findEmail, [email]);
         if (rows.length !== 0) {
-            return res.status(401).json({ error: 'User email already exist' });
+            return res.status(401).json({ success: false, message: 'User email already exist' });
         }
-
         connection.execute(createUser, data);
         connection.end();
 
         const token = jwt.sign({ id: id }, process.env.JWT_SECRET, { expiresIn: '1hr' });
 
-        res.status(201).json({
+        return res.status(201).json({
+            success: true,
             message: 'Signup Successful',
             token: token,
             data: {
+                username: username,
                 firstname: firstname,
                 lastname: lastname,
                 email: email,
@@ -36,7 +36,7 @@ export const signup = async (req, res) => {
         });
     }
     catch (error) {
-        res.status(500).json({ error: 'Registration failed' });
+        return res.status(500).json({ success: false, message: 'Registration failed' });
     }
 }
 
