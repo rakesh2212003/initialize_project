@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
-import { getConnection } from '../config/mysql.config.js'
+import { getConnection } from '../config/mysql.js'
 import { userTable, createUser, findEmail } from '../models/user.js'
 
 export const signup = async (req, res) => {

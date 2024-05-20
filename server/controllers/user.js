@@ -1,4 +1,4 @@
-import { getConnection } from '../config/mysql.config.js';
+import { getConnection } from '../config/mysql.js';
 import { getUserQuery, getAllUserQuery, deleteUserQuery } from "../models/user.js";
 
 export const getUser = async (req, res) => {
